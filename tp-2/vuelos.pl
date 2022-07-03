@@ -34,20 +34,21 @@ init :-
 % Iniciar búsqueda bfs o dfs en base a los parámetros
 rutas(Origen, Destino, MinTrasbordos) :- 
 	MinTrasbordos = s, 
-	breadthFirstSearch([[Origen]], Destino, RutaInvertida),
-	write('\nRuta: '), reverse(RutaInvertida, Ruta), write(Ruta),
+	breadthFirstSearch([[Origen]], Destino, Ruta),
+	write('\nRuta: '), write(Ruta),
 	tiempoViaje(Ruta, Tiempo),
 	write('\nTiempo de viaje: '), write(Tiempo).
 rutas(Origen, Destino, MinTrasbordos) :- 
 	MinTrasbordos = n, 
-	deepFirstSearch(Origen, Destino, [Origen], RutaInvertida),
-	write('\nRuta: '), reverse(RutaInvertida, Ruta), write(Ruta),
+	deepFirstSearch(Origen, Destino, [Origen], Ruta),
+	write('\nRuta: '), write(Ruta),
 	tiempoViaje(Ruta, Tiempo),
 	write('\nTiempo de viaje: '), write(Tiempo).
 
 
 
-breadthFirstSearch([[Destino|Ruta]|_], Destino, [Destino|Ruta]).
+breadthFirstSearch([[Destino|Ruta]|_], Destino, RutaFinal) :- 
+	reverse([Destino|Ruta], RutaFinal).
 breadthFirstSearch([PrimerRuta|OtrasRutas], Destino, Ruta) :-
 	hijosNodo(PrimerRuta, NuevasRutas),
 	concatenar(OtrasRutas, NuevasRutas, NuevaListaNodos),
@@ -72,7 +73,8 @@ concatenar([], B, B).
 concatenar([H|T], B, [H|C]) :- concatenar(T, B, C).
 
 
-deepFirstSearch(Origen, Origen, Ruta, Ruta).
+deepFirstSearch(Origen, Origen, Ruta, RutaFinal) :-
+	reverse(Ruta, RutaFinal).
 deepFirstSearch(Origen, Destino, RutaParcial, Ruta) :- 
 	conectadas(Origen, Ciudad, _),
 	not(in(Ciudad, RutaParcial)),
