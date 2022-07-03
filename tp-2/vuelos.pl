@@ -23,32 +23,15 @@ vuelo(neuquen, calafate, 65).
 conectadas(A, B, Tiempo) :- vuelo(A, B, Tiempo).
 conectadas(A, B, Tiempo) :- vuelo(B, A, Tiempo).
 
-
-init :- 
-	write('Ciudad de origen:\n'), read(Origen),
-	write('Ciudad de destino:\n'), read(Destino),
-	write('Mínimos trasbordos? (s/n):\n'), read(MinTrasbordos),
-	rutas(Origen, Destino, MinTrasbordos).
-
-
-% Iniciar búsqueda bfs o dfs en base a los parámetros
-rutas(Origen, Destino, MinTrasbordos) :- 
-	MinTrasbordos = s, 
-	breadthFirstSearch([[Origen]], Destino, Ruta),
-	write('\nRuta: '), write(Ruta),
-	tiempoViaje(Ruta, Tiempo),
-	write('\nTiempo de viaje: '), write(Tiempo).
-rutas(Origen, Destino, MinTrasbordos) :- 
-	MinTrasbordos = n, 
-	deepFirstSearch(Origen, Destino, [Origen], Ruta),
-	write('\nRuta: '), write(Ruta),
-	tiempoViaje(Ruta, Tiempo),
-	write('\nTiempo de viaje: '), write(Tiempo).
-
+% Ejemplos de uso:
+%	breadthFirstSearch([[rosario]], neuquen, Ruta).
+%	deepFirstSearch(rosario, neuquen, [rosario], Ruta).
 
 
 breadthFirstSearch([[Destino|Ruta]|_], Destino, RutaFinal) :- 
-	reverse([Destino|Ruta], RutaFinal).
+	reverse([Destino|Ruta], RutaFinal),
+	tiempoViaje(RutaFinal, Tiempo), 
+	write('\nTiempo: '), write(Tiempo).
 breadthFirstSearch([PrimerRuta|OtrasRutas], Destino, Ruta) :-
 	hijosNodo(PrimerRuta, NuevasRutas),
 	concatenar(OtrasRutas, NuevasRutas, NuevaListaNodos),
@@ -74,7 +57,9 @@ concatenar([H|T], B, [H|C]) :- concatenar(T, B, C).
 
 
 deepFirstSearch(Origen, Origen, Ruta, RutaFinal) :-
-	reverse(Ruta, RutaFinal).
+	reverse(Ruta, RutaFinal),
+	tiempoViaje(RutaFinal, Tiempo), 
+	write('\nTiempo: '), write(Tiempo).
 deepFirstSearch(Origen, Destino, RutaParcial, Ruta) :- 
 	conectadas(Origen, Ciudad, _),
 	not(in(Ciudad, RutaParcial)),
