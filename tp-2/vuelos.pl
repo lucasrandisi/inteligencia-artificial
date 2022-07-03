@@ -19,8 +19,9 @@ vuelo(buenosAires, calafate, 115).
 vuelo(buenosAires,  puertoMadryn, 75).
 vuelo(neuquen, calafate, 65).
 
-conectadas(A, B) :- vuelo(A, B, _).
-conectadas(A, B) :- vuelo(B, A, _).
+% Verificar si 2 ciudades se encuentran conectadas
+conectadas(A, B, Tiempo) :- vuelo(A, B, Tiempo).
+conectadas(A, B, Tiempo) :- vuelo(B, A, Tiempo).
 
 
 init :- 
@@ -30,14 +31,19 @@ init :-
 	rutas(Origen, Destino, MinTrasbordos).
 
 
+% Iniciar búsqueda bfs o dfs en base a los parámetros
 rutas(Origen, Destino, MinTrasbordos) :- 
 	MinTrasbordos = s, 
-	breadthFirstSearch([[Origen]], Destino, Ruta),
-	write('Ruta:\n'), write(Ruta).
+	breadthFirstSearch([[Origen]], Destino, RutaInvertida),
+	write('\nRuta: '), reverse(RutaInvertida, Ruta), write(Ruta),
+	tiempoViaje(Ruta, Tiempo),
+	write('\nTiempo de viaje: '), write(Tiempo).
 rutas(Origen, Destino, MinTrasbordos) :- 
 	MinTrasbordos = n, 
 	deepFirstSearch(Origen, Destino, [Origen], RutaInvertida),
-	write('Ruta:\n'), reverse(RutaInvertida, Ruta), write(Ruta).
+	write('\nRuta: '), reverse(RutaInvertida, Ruta), write(Ruta),
+	tiempoViaje(Ruta, Tiempo),
+	write('\nTiempo de viaje: '), write(Tiempo).
 
 
 
@@ -48,11 +54,12 @@ breadthFirstSearch([PrimerRuta|OtrasRutas], Destino, Ruta) :-
 	breadthFirstSearch(NuevaListaNodos, Destino, Ruta).
 
 
+% Ciudades conectadas que se no se encuentren en la ruta actual
 hijosNodo([Nodo|Ruta], Hijos) :-
 	findall(
 		[Hijo,Nodo|Ruta], 
 		(
-			conectadas(Nodo, Hijo),
+			conectadas(Nodo, Hijo, _),
 			not(in(Hijo, [Nodo|Ruta]))
 		),
 		Hijos
@@ -60,16 +67,23 @@ hijosNodo([Nodo|Ruta], Hijos) :-
 hijosNodo(_, []).
 
 
+% Concatenar listas
 concatenar([], B, B).
 concatenar([H|T], B, [H|C]) :- concatenar(T, B, C).
 
 
 deepFirstSearch(Origen, Origen, Ruta, Ruta).
 deepFirstSearch(Origen, Destino, RutaParcial, Ruta) :- 
-	conectadas(Origen, Ciudad),
+	conectadas(Origen, Ciudad, _),
 	not(in(Ciudad, RutaParcial)),
 	deepFirstSearch(Ciudad, Destino, [Ciudad|RutaParcial], Ruta).
 
 
+% Verificar si un elemento se encuentra en la lista
 in(X, [X|_]).
 in(X, [_|T]) :- in(X, T).
+
+
+% Calcular tiempo de viaje de una ruta
+tiempoViaje([_], 0).
+tiempoViaje([C1, C2|T], S) :- conectadas(C1, C2, T1), tiempoViaje([C2|T], T2), S is T1 + T2.
