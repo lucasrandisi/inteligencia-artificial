@@ -1,8 +1,9 @@
-init :- write('Ingrese un string:\n'), read(X), write(X), fistWhiteSpaceIndex(X, Y), write(Y). 
+init :- write('Ingrese un string:\n'), read(X), words(X, Y), write(Y).
 
-fistWhiteSpaceIndex([H|_], I) :- write(H), H = ' ', I is 0.
-fistWhiteSpaceIndex([_|T], I) :- write(T), fistWhiteSpaceIndex(T, I2), I is I2 + 1.
-
-words('', []).
-words(X, [H|T]) :- sub_atom(X, 0, 1, _, H), H \= ' ', sub_atom(X, 1, _, 0, XT), words(XT, T).
-words(X, [T]) :- sub_atom(X, 1, _, 0, XT), words(XT, T).
+words(X, [H|T]) :- 
+    sub_atom(X, FirstWhiteSpaceIndex, _, _, ' '),
+    sub_atom(X, 0, FirstWhiteSpaceIndex, _, H), 
+    I is FirstWhiteSpaceIndex + 1,
+    sub_atom(X, I, _, 0, X2),
+    words(X2, T).
+words(X, [X]).
