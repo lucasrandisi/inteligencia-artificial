@@ -1,0 +1,6 @@
+:- dynamic persona/2.
+
+persona(1, lucas).
+persona(2, augusto).
+persona(3, pedro).
+

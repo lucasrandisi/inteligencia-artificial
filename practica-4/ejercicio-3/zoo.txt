@@ -1,0 +1,4 @@
+:- dynamic habito/2.
+
+habito(lucas, alimentacion(sopa, 1)).
+

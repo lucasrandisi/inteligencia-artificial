@@ -1,0 +1,8 @@
+:- dynamic gasto/2.
+
+gasto(maria, gas(1000)).
+gasto(juan, luz(200)).
+gasto(pedro, gas(200)).
+gasto(pedro, cel(400)).
+gasto(pedro, luz(1000)).
+

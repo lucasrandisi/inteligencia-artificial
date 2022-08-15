@@ -1,0 +1,7 @@
+:- dynamic libro/5.
+
+libro(1, a, a, a, 100).
+libro(2, b, a, b, 400).
+libro(3, c, a, c, 200).
+libro(4, d, a, d, 100).
+
