@@ -1,0 +1,14 @@
+:- dynamic receta/3.
+
+receta(1, tortilla, ingrediente(papa, 2)).
+receta(1, tortilla, ingrediente(huevo, 4)).
+
+receta(2, hamburguesa, ingrediente(pan, 2)).
+receta(2, hamburguesa, ingrediente(carne, 1)).
+receta(2, hamburguesa, ingrediente(mayonesa, 1)).
+
+receta(2, pancho, ingrediente(salchica, 1)).
+receta(2, pancho, ingrediente(pan, 2)).
+receta(2, pancho, ingrediente(mayonesa, 1)).
+
+
