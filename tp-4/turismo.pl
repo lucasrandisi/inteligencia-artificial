@@ -1,87 +1,90 @@
-%Tipo de viaje
-tipoViaje(cancun, placer).
-tipoViaje(kingston, placer).
-tipoViaje(mykonos, placer).
-tipoViaje(panama, placer).
-tipoViaje(oxford, estudio).
-tipoViaje(tokyo, estudio).
-tipoViaje(berlin, estudio).
-tipoViaje(roma, estudio).
-tipoViaje(chicago, trabajo).
-tipoViaje(moscu, trabajo).
-tipoViaje(seul, trabajo).
-tipoViaje(madrid, trabajo).
-
-
-%Tipo de clima
-clima(cancun, tropical).
-clima(kingston, tropical).
-clima(mykonos, calido).
-clima(panama, tropical).
-clima(oxford, frio).
-clima(tokyo, frio).
-clima(berlin, frio).
-clima(roma, calido).
-clima(chicago, frio).
-clima(moscu, frio).
-clima(seul, calido).
-clima(madrid, calido).
-
-%Presupuesto
-presupuesto(cancun, 2500).
-presupuesto(kingston, 1500).
-presupuesto(mykonos, 4000).
-presupuesto(panama, 2000).
-presupuesto(oxford, 5000).
-presupuesto(tokyo, 5500).
-presupuesto(berlin, 4820).
-presupuesto(roma, 4900).
-presupuesto(chicago, 3500).
-presupuesto(moscu, 7000).
-presupuesto(seul, 5000).
-presupuesto(madrid, 4000).
-
-
-%Cantidad de personas recomendada
-cantPersonasRecomendadas(cancun, 4).
-cantPersonasRecomendadas(kingston, 3).
-cantPersonasRecomendadas(mykonos, 2).
-cantPersonasRecomendadas(panama, 6).
-cantPersonasRecomendadas(oxford, 2).
-cantPersonasRecomendadas(tokyo, 1).
-cantPersonasRecomendadas(berlin, 4).
-cantPersonasRecomendadas(roma, 6).
-cantPersonasRecomendadas(chicago, 1).
-cantPersonasRecomendadas(moscu, 1).
-cantPersonasRecomendadas(seul, 2).
-cantPersonasRecomendadas(madrid, 4).
-
+:- dynamic(menores/2).
+:- dynamic(costoSemanaPersona/2).
+:- dynamic(mesRecomendado/2).
+:- dynamic(tipoDestino/2).
+:- dynamic(clima/2).
+:- dynamic(vuelo/3).
 
 inicio:- 
-	leer_opciones(TipoViaje, Presupuesto, CantidadPersonas, Clima),
-	recomendar_viaje(TipoViaje, Presupuesto, CantidadPersonas, Clima).
+	cargarDatos,
+	leerOpciones(Presupuesto, CantidadPersonas, CantidadDias, Menores, Mes, TipoDestino, Clima, TiempoViajeMaximo, CiudadOrigen),
+	recomendarViaje(Presupuesto, CantidadPersonas, CantidadDias, Menores, Mes, TipoDestino, Clima, TiempoViajeMaximo, CiudadOrigen).
 
 
-leer_opciones(TipoViaje, Presupuesto, CantidadPersonas, Clima) :- 
-	writeln('Ingrese el tipo de viaje que desea (trabajo, placer, estudio): '),
-	read(TipoViaje),
-	writeln('Ingrese el presupuesto con el que cuenta: '),
-	read(Presupuesto), 
-	writeln('Ingrese la cantidad de personas que viajan: '),
+cargarDatos :- consult('/home/lucas/Facultad/Inteligencia Artificial/tp-4/ciudades.txt').
+
+
+leerOpciones(Presupuesto, CantidadPersonas, CantidadDias, Menores, Mes, TipoDestino, Clima, TiempoViajeMaximo, CiudadOrigen) :- 
+	writeln('Presupuesto:'),
+	read(Presupuesto),
+	writeln('Cantidad de Personas:'),
 	read(CantidadPersonas),
-	writeln('Ingrese el clima que desea (frio, calido, tropical): '),
-	read(Clima).
+	writeln('Cantidad de días'),
+	read(CantidadDias),
+	writeln('Viaja con menores (si, no):'),
+	read(Menores),
+	writeln('Mes en el que tiene pensado viajar: '),
+	read(Mes),
+	writeln('Tipo de Destino (ciudad o exteriores):'),
+	read(TipoDestino), 
+	writeln('Clima:'),
+	read(Clima),
+	writeln('Máximo tiempo de viaje:'),
+	read(TiempoViajeMaximo),
+	writeln('Ciudad de Origen:'),
+	read(CiudadOrigen).
 
 
-recomendar_viaje(TipoViaje, Presupuesto, CantidadPersonas, Clima):-
-	tipoViaje(X, TipoViaje),
-	presupuesto(X, PrecioPersona),
-	Total is PrecioPersona * CantidadPersonas,
-	Presupuesto >= Total,
-	cantPersonasRecomendadas(X, CP),
-	CP >= CantidadPersonas,
-	clima(X, Clima),
-	write('El destino recomendado es: '), 
-	writeln(X).
-recomendar_viaje(_, _, _, _):-
- writeln('No se ha encontrado viaje para sus preferencias').
+recomendarViaje(Presupuesto, CantidadPersonas, CantidadDias, Menores, Mes, TipoDestino, Clima, TiempoViajeMaximo, CiudadOrigen) :-
+	menores(Destino, Menores),
+	costoSemanaPersona(Destino, CostoDiaPersona),
+	CostoTotal is CostoDiaPersona * CantidadPersonas * CantidadDias,
+	Presupuesto >= CostoTotal,
+	mesRecomendado(Destino, Mes),
+	tipoDestino(Destino, TipoDestino),
+	clima(Destino, Clima),
+	breadthFirstSearch(CiudadOrigen, Destino, RutaFinal),
+	tiempoViaje(RutaFinal, TiempoViaje),
+	TiempoViajeMaximo >= TiempoViaje,
+	writeln('Destino Recomendado: '),
+	write(Destino).
+recomendarViaje(_, _, _, _, _, _, _, _):- writeln('No se ha encontrado un destino para sus preferencias').
+
+
+
+breadthFirstSearch([[Destino|Ruta]|_], Destino, RutaFinal) :- 
+	reverse([Destino|Ruta], RutaFinal).
+breadthFirstSearch([PrimerRuta|OtrasRutas], Destino, Ruta) :-
+	hijosNodo(PrimerRuta, NuevasRutas),
+	concatenar(OtrasRutas, NuevasRutas, NuevaListaNodos),
+	breadthFirstSearch(NuevaListaNodos, Destino, Ruta).
+
+% Verificar si 2 ciudades se encuentran conectadas
+conectadas(A, B, Tiempo) :- vuelo(A, B, Tiempo).
+conectadas(A, B, Tiempo) :- vuelo(B, A, Tiempo).
+
+
+% Ciudades conectadas que se no se encuentren en la ruta actual
+hijosNodo([Nodo|Ruta], Hijos) :-
+	findall(
+		[Hijo,Nodo|Ruta], 
+		(
+			conectadas(Nodo, Hijo, _),
+			not(in(Hijo, [Nodo|Ruta]))
+		),
+		Hijos
+	).
+hijosNodo(_, []).
+
+
+% Concatenar listas
+concatenar([], B, B).
+concatenar([H|T], B, [H|C]) :- concatenar(T, B, C).
+
+% Verificar si un elemento se encuentra en la lista
+in(X, [X|_]).
+in(X, [_|T]) :- in(X, T).
+
+% Calcular tiempo de viaje de una ruta
+tiempoViaje([_], 0).
+tiempoViaje([C1, C2|T], S) :- conectadas(C1, C2, T1), tiempoViaje([C2|T], T2), S is T1 + T2.

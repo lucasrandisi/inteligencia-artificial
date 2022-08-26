@@ -1,0 +1,70 @@
+% Precio alojamiento por noche por persona
+costoSemanaPersona('Buenos Aires', 17000).
+costoSemanaPersona('Bariloche', 26000).
+costoSemanaPersona('Calafate', 18500).
+costoSemanaPersona('Puerto Madryn', 19000).
+costoSemanaPersona('Puerto Iguazú', 37000).
+
+% Mejores meses para visitar
+mesRecomendado('Buenos Aires', marzo).
+mesRecomendado('Buenos Aires', abril).
+mesRecomendado('Buenos Aires', mayo).
+mesRecomendado('Bariloche', julio).
+mesRecomendado('Bariloche', agosto).
+mesRecomendado('Calafate', octubre).
+mesRecomendado('Calafate', noviembre).
+mesRecomendado('Calafate', diciembre).
+mesRecomendado('Calafate', enero).
+mesRecomendado('Calafate', febrero).
+mesRecomendado('Calafate', marzo).
+mesRecomendado('Calafate', abril).
+mesRecomendado('Puerto Madryn', mayo).
+mesRecomendado('Puerto Madryn', junio).
+mesRecomendado('Puerto Madryn', julio).
+mesRecomendado('Puerto Madryn', agosto).
+mesRecomendado('Puerto Iguazú', marzo).
+mesRecomendado('Puerto Iguazú', abril).
+mesRecomendado('Puerto Iguazú', mayo).
+mesRecomendado('Puerto Iguazú', junio).
+
+
+% Tipos de destinos
+tipoDestino('Buenos Aires', ciudad).
+tipoDestino('Bariloche', ciudad).
+tipoDestino('Bariloche', exteriores).
+tipoDestino('Calafate', exteriores).
+tipoDestino('Puerto Madryn', exteriores).
+tipoDestino('Puerto Iguazú', exteriores).
+
+
+
+
+% Destino recomendado para menores
+menores('Buenos Aires', si).
+menores('Bariloche', si).
+menores('Calafate', no).
+menores('Puerto Madryn', no).
+menores('Puerto Iguazú', no).
+
+
+% Tipo de clima
+clima('Buenos Aires', templado).
+clima('Bariloche', frio).
+clima('Calafate', frio).
+clima('Puerto Madryn', frio).
+clima('Puerto Iguazú', calido).
+
+
+% Duración del viaje (Origen, Destino, Duracion en Hs, Costo)
+vuelo('Buenos Aires', 'Rosario', 1, 17000).
+vuelo('Buenos Aires', 'Bariloche', 2, 17000).
+vuelo('Buenos Aires', 'Calafate', 3, 26000).
+vuelo('Buenos Aires', 'Puerto Madryn', 2, 20000).
+vuelo('Buenos Aires', 'Puerto Iguazú', 2, 14000).
+vuelo('Bariloche', 'Puerto Iguazú', 5, 54000).
+
+
+
+
+
+
