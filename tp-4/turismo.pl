@@ -48,7 +48,7 @@ recomendarViaje(Presupuesto, CantidadPersonas, CantidadDias, Menores, Mes, TipoD
 	TiempoViajeMaximo >= TiempoViaje,
 	writeln('Destino Recomendado: '),
 	write(Destino).
-recomendarViaje(_, _, _, _, _, _, _, _):- writeln('No se ha encontrado un destino para sus preferencias').
+recomendarViaje(_, _, _, _, _, _, _, _, _):- writeln('No se ha encontrado un destino para sus preferencias').
 
 
 
