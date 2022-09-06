@@ -1,31 +1,31 @@
 % Precio alojamiento por noche por persona
-costoSemanaPersona('Buenos Aires', 17000).
-costoSemanaPersona('Bariloche', 26000).
-costoSemanaPersona('Calafate', 18500).
-costoSemanaPersona('Puerto Madryn', 19000).
-costoSemanaPersona('Puerto Iguazú', 37000).
+costoDiaPersona('Buenos Aires', 17000).
+costoDiaPersona('Bariloche', 26000).
+costoDiaPersona('Calafate', 18500).
+costoDiaPersona('Puerto Madryn', 19000).
+costoDiaPersona('Puerto Iguazú', 37000).
 
 % Mejores meses para visitar
-mesRecomendado('Buenos Aires', marzo).
-mesRecomendado('Buenos Aires', abril).
-mesRecomendado('Buenos Aires', mayo).
-mesRecomendado('Bariloche', julio).
-mesRecomendado('Bariloche', agosto).
-mesRecomendado('Calafate', octubre).
-mesRecomendado('Calafate', noviembre).
-mesRecomendado('Calafate', diciembre).
-mesRecomendado('Calafate', enero).
-mesRecomendado('Calafate', febrero).
-mesRecomendado('Calafate', marzo).
-mesRecomendado('Calafate', abril).
-mesRecomendado('Puerto Madryn', mayo).
-mesRecomendado('Puerto Madryn', junio).
-mesRecomendado('Puerto Madryn', julio).
-mesRecomendado('Puerto Madryn', agosto).
-mesRecomendado('Puerto Iguazú', marzo).
-mesRecomendado('Puerto Iguazú', abril).
-mesRecomendado('Puerto Iguazú', mayo).
-mesRecomendado('Puerto Iguazú', junio).
+mesRecomendado('Buenos Aires', 'Marzo').
+mesRecomendado('Buenos Aires', 'Abril').
+mesRecomendado('Buenos Aires', 'Mayo').
+mesRecomendado('Bariloche', 'Julio').
+mesRecomendado('Bariloche', 'Agosto').
+mesRecomendado('Calafate', 'Octubre').
+mesRecomendado('Calafate', 'Noviembre').
+mesRecomendado('Calafate', 'Diciembre').
+mesRecomendado('Calafate', 'Enero').
+mesRecomendado('Calafate', 'Febrero').
+mesRecomendado('Calafate', 'Marzo').
+mesRecomendado('Calafate', 'Abril').
+mesRecomendado('Puerto Madryn', 'Mayo').
+mesRecomendado('Puerto Madryn', 'Junio').
+mesRecomendado('Puerto Madryn', 'Julio').
+mesRecomendado('Puerto Madryn', 'Agosto').
+mesRecomendado('Puerto Iguazú', 'Marzo').
+mesRecomendado('Puerto Iguazú', 'Abril').
+mesRecomendado('Puerto Iguazú', 'Mayo').
+mesRecomendado('Puerto Iguazú', 'Junio').
 
 
 % Tipos de destinos
@@ -35,8 +35,6 @@ tipoDestino('Bariloche', exteriores).
 tipoDestino('Calafate', exteriores).
 tipoDestino('Puerto Madryn', exteriores).
 tipoDestino('Puerto Iguazú', exteriores).
-
-
 
 
 % Destino recomendado para menores
@@ -56,12 +54,12 @@ clima('Puerto Iguazú', calido).
 
 
 % Duración del viaje (Origen, Destino, Duracion en Hs, Costo)
-vuelo('Buenos Aires', 'Rosario', 1, 17000).
-vuelo('Buenos Aires', 'Bariloche', 2, 17000).
-vuelo('Buenos Aires', 'Calafate', 3, 26000).
-vuelo('Buenos Aires', 'Puerto Madryn', 2, 20000).
-vuelo('Buenos Aires', 'Puerto Iguazú', 2, 14000).
-vuelo('Bariloche', 'Puerto Iguazú', 5, 54000).
+vuelo('Buenos Aires', 'Rosario', 1).
+vuelo('Buenos Aires', 'Bariloche', 2).
+vuelo('Buenos Aires', 'Calafate', 3).
+vuelo('Buenos Aires', 'Puerto Madryn', 2).
+vuelo('Buenos Aires', 'Puerto Iguazú', 2).
+vuelo('Bariloche', 'Puerto Iguazú', 5).
 
 
 
