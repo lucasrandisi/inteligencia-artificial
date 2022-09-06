@@ -36,10 +36,10 @@ leerOpciones(Presupuesto, CantidadPersonas, CantidadDias, Menores, Mes, TipoDest
 
 
 recomendarViaje(Presupuesto, CantidadPersonas, CantidadDias, Menores, Mes, TipoDestino, Clima, TiempoViajeMaximo, CiudadOrigen) :-
-	tipoDestino(Destino, TipoDestino),
-	clima(Destino, Clima),
-	menores(Destino, Menores),
 	mesRecomendado(Destino, Mes),
+	clima(Destino, Clima),
+	tipoDestino(Destino, TipoDestino),
+	menores(Destino, Menores),
 
 	costoDiaPersona(Destino, CostoDiaPersona),
 	CostoTotal is CostoDiaPersona * CantidadPersonas * CantidadDias,
@@ -50,7 +50,7 @@ recomendarViaje(Presupuesto, CantidadPersonas, CantidadDias, Menores, Mes, TipoD
 	TiempoViajeMaximo >= TiempoViaje,
 
 
-	writeln('Destino Recomendado: '),
+	writeln('\nDestino Recomendado: '),
 	write(Destino).
 recomendarViaje(_, _, _, _, _, _, _, _, _):- writeln('No se ha encontrado un destino para sus preferencias').
 
